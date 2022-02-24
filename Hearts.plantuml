@@ -1,0 +1,133 @@
+@startuml heartsGame
+
+class Game {
+    -private final ArrayList<Player> players;
+    -private Score score;
+    -private int roundNumber;
+    -private Deck deck;
+    +private void play();
+}
+
+class Card{
+    -private final Suits suit;
+    -private final Ranks rank;
+    +public boolean higherRank(Card card);
+    +public boolean sameSuit(Suits suit);
+    + public boolean sameSuit(Card card);
+
+}
+
+class Deck{
+  -final ArrayList<Card> deck;
+  +public void shuffle();
+  +public Card giveCard();
+  +public boolean hasCard();
+  +public boolean gatherBack(Card c);
+
+}
+class Player extends Hand{
+ -private Seats seat;
+ -private String name;
+ -private boolean stateBOT;
+
+
+}
+
+class Hand{
+  -private SortedSet<Card> hand;
+  +public Card giveCard(int card);
+  +public ArrayList<Card> getHighRankCards(int quantity)
+  +public boolean hasCard(int card);
+  +public boolean HaveDeuceOfClubs();
+  +public boolean HasOnlyHearts();
+  +public void takeCard(Card other)
+
+}
+class Round {
+    -private ArrayList<Player> hands;
+    -private Deck Deck;
+    -private Score score;
+    -private ArrayList<Trick> tricks;
+   
+    +public void deal(Seats seat);
+    +public void play();
+    +public void exchange(int roundNumber)
+   
+      
+}
+
+
+class Trick {
+
+    -private Seats leader;
+    -private Suits trickSuit;
+    -private boolean HeartsPlayed;
+    +public void collect(Card card, Seats seat);
+    +public Seats getWinner();
+}
+
+class TrickLegality{
+     -private Trick trick;
+     +public Card validateTrick(Player):Card
+}
+ 
+
+enum ExchangeTypes{
+      RIGHT,
+      LEFT,
+      ACROSS,
+      NONE;
+     +public static ExchangeTypes fromOrdinal(int param);
+     +public static int direction(ExchangeTypes type);
+
+}
+
+enum Suits{
+  Clubs("\u2663")
+   Diamonds("\u2666")
+   Hearts("\u2665")
+   Spades("\u2660")
+}
+enum Ranks{
+   Deuce('2')
+   Three('3')
+   Four('4')
+    Five('5')
+    Six('6')
+    Seven('7')
+    Eight('8')
+     Nine('9')
+    Ten('T')
+    Jack('J')
+    Queen('Q')
+     King('K')
+      Ace('A');
+}
+
+
+enum Seats{
+  East,
+  West,
+  North,
+  South.
+
+  +public Seats next() 
+  +public Seats who(int from, int to)
+}
+Card --* Ranks: owns  >
+Card --*Suits: owns  >
+Game --* Round: > have
+Round--* Deck: have >
+Round--* Trick: have >
+Round--* Player: have >
+Round--*ExchangeTypes: use >
+Round--*TrickLegality: use >
+Deck--*Card: have >
+Player --Seats: > have
+
+
+
+
+
+
+@enduml
